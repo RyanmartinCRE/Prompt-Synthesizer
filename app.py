@@ -214,89 +214,48 @@ with st.form("prompt_form"):
         output_type = st.selectbox("🧾 Output format", ["Text", "Conversation", "Image Prompt", "Markdown", "Bullet List", "JSON"],
                                    index=["Text", "Conversation", "Image Prompt", "Markdown", "Bullet List", "JSON"].index(prefill.get("output_type", "Text")))
     audience = st.text_input("👥 Who's it for? (Optional)", value=prefill.get("audience", ""))
-    save_txt = st.checkbox("💾 Save this to a .txt file?")
+    save_txt = st.checkbox("📂 Save this to a .txt file?")
     depth = st.slider("🧬 Prompt Inception Depth", 1, 5, 1, help="How many layers deep should we go?")
-    god_mode = st.checkbox("🛐 Enable Prompt God Mode (advanced recursion)")
+    god_mode = st.checkbox("😐 Enable Prompt God Mode (advanced recursion)")
     submitted = st.form_submit_button("✨ Generate Prompt")
 
 # --- Prompt Generation ---
 if submitted:
-    with st.spinner("🪄 Synthesizing your prompt..."):
+    with st.spinner("🦤 Synthesizing your prompt..."):
         steps = []
 
-        # STEP 1: Break down the task
         if depth >= 2:
             steps.append(f"Step 1: Analyze the user’s goal: '{goal}' and explain what makes a good prompt for it.")
 
-        # STEP 2: Suggest prompt structure
         if depth >= 3:
             steps.append("Step 2: Outline the ideal structure and elements the prompt should include.")
 
-        # STEP 3: Draft a first version of the prompt
         steps.append("Step 3: Generate the full optimized prompt using the goal, tone, output type, and audience.")
 
-        # STEP 4: God Mode – critique and rewrite
         if god_mode:
-            steps.append("Step 4: Review and critique the prompt like a prompt engineer, then rewrite it with improvements.")
+            steps.append("Step 4: Review and improve the prompt like an elite prompt engineer. Offer a brief critique before the revision.")
 
         prompt_template = f"""
-You are an expert AI prompt engineer.
+You are a professional AI prompt engineer. Your task is to turn a rough user idea into a clear, structured, and effective AI prompt.
 
-Your mission is to help craft a powerful prompt based on the following:
+User Input:
 - Goal: {goal}
 - Tone: {tone}
-- Output Format: {output_type}
+- Output Type: {output_type}
 - Audience: {audience or 'Not specified'}
 
 Follow these steps:
 {chr(10).join(steps)}
 
-Respond with only the final prompt (plus any optional tips).
-"""
-
-        # Always use the user's goal
-prompt_template = f"""
-You are a professional AI prompt engineer. Your task is to turn a rough user idea into a clear, structured, and effective AI prompt.
-
-Here is the input:
-- Goal: {goal}
-- Tone: {tone}
-- Output Type: {output_type}
-- Audience: {audience or 'Not specified'}
-
-"""
-
-# Add steps based on depth
-if depth >= 2:
-    prompt_template += "\nStep 1: Analyze the user's goal and identify the best prompt structure.\n"
-if depth >= 3:
-    prompt_template += "Step 2: Break it down into logical sections or formatting guidance.\n"
-
-# Always include the main instruction
-prompt_template += "Step 3: Write the optimized AI prompt that meets the above criteria.\n"
-
-# Add God Mode bonus step
-if god_mode:
-    prompt_template += "Step 4: Critique the prompt and rewrite it with expert-level improvements.\n"
-
-# Final instruction
-prompt_template += "\nRespond only with the final version of the prompt (and an optional pro tip)."
-
-Here is the input:
-- Goal: {goal}
-- Tone: {tone}
-- Output Type: {output_type}
-- Audience: {audience}
-
 Write a full prompt that:
-- Starts by instructing the AI what role to take
-- Clearly sets the task
+- Starts by assigning the AI a specific role
+- Clearly defines the task
 - Specifies the tone or style
 - Includes formatting guidance (if helpful)
-- Optionally includes a sample input/output pair
-- Ends with a short tip on how to customize it further
+- Optionally includes an input/output example
+- Ends with a tip on how to improve or adapt it further
 
-Respond only with the generated prompt and tip.
+Respond only with the final prompt (and tip).
 """
 
         try:
@@ -306,13 +265,13 @@ Respond only with the generated prompt and tip.
             st.markdown("## 🌟 Your Generated Prompt")
             st.code(result, language="markdown")
 
-            st.download_button("📥 Download Prompt", result, file_name="prompt.txt", mime="text/plain")
+            st.download_button("📅 Download Prompt", result, file_name="prompt.txt", mime="text/plain")
 
             if save_txt:
                 filename = f"prompt_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.txt"
                 with open(filename, "w", encoding="utf-8") as f:
                     f.write(result)
-                st.toast(f"💾 Saved to {filename}")
+                st.toast(f"📂 Saved to {filename}")
 
             new_row = {
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
