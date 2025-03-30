@@ -34,12 +34,18 @@ model = genai.GenerativeModel("models/gemini-1.5-flash")
 # --- Prompt Tips ---
 tips = [
     "Keep prompts specific, not vague.",
-    "Include sample inputs/outputs if you can.",
-    "Ask the AI to adopt a role: 'Act like a teacher...'",
-    "Use bullet points for structured tasks.",
-    "Mention tone and audience clearly.",
-    "Avoid multi-tasking prompts. Focus on one goal.",
-    "Review and refine your prompt after the first try!"
+    "Include sample inputs/outputs.",
+    "Ask the AI to adopt a role.",
+    "Use bullet points for structure.",
+    "Mention tone and audience.",
+    "Avoid multi-tasking prompts.",
+    "Review and refine after first run!",
+    "Set clear goals or desired outcomes.",
+    "Reference format or style when helpful.",
+    "Chain steps when possible.",
+    "Include 'Do' and 'Don’t' examples.",
+    "Request reasoning when clarity matters.",
+    "Use follow-ups to test prompt strength."
 ]
 random_tip = random.choice(tips)
 
@@ -183,7 +189,7 @@ st.markdown("""
 # --- Sidebar ---
 with st.sidebar:
     lottie_json = load_lottiefile("idea.json")
-    st_lottie(lottie_json, width=200, height=200, key="idea")
+    st_lottie(lottie_json, width=250, height=250, key="idea")
     st.markdown("<h2>💡 Prompt Toolkit</h2>", unsafe_allow_html=True)
     st.markdown(f"📌 <i>Tip of the Day:</i> <small>{random_tip}</small>", unsafe_allow_html=True)
     st.markdown("---")
