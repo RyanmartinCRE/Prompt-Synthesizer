@@ -206,23 +206,26 @@ prefill = template_data if template_data else {}
 # --- Prompt Form ---
 with st.form("prompt_form"):
     st.markdown("### ✍️ Your Prompt Details")
-    goal = st.text_area("💡 What do you want the AI to do?", value=prefill.get("goal", ""))
+    goal = st.text_area("💡 What do you want the AI to do?", value=prefill.get("goal", ""), key="goal_input")
     col1, col2 = st.columns(2)
     with col1:
-        tone = st.selectbox("🎭 Tone or vibe", valid_tones, index=valid_tones.index(prefill.get("tone", "Clear and helpful")))
+        tone = st.selectbox("🎭 Tone or vibe", valid_tones, index=valid_tones.index(prefill.get("tone", "Clear and helpful")), key="tone_input")
     with col2:
         output_type = st.selectbox("🧾 Output format", ["Text", "Conversation", "Image Prompt", "Markdown", "Bullet List", "JSON"],
-                                   index=["Text", "Conversation", "Image Prompt", "Markdown", "Bullet List", "JSON"].index(prefill.get("output_type", "Text")))
-    audience = st.text_input("👥 Who's it for? (Optional)", value=prefill.get("audience", ""))
-    save_txt = st.checkbox("📂 Save this to a .txt file?")
-    depth = st.slider("🧬 Prompt Inception Depth", 1, 5, 1, help="How many layers deep should we go?")
-    god_mode = st.checkbox("🧠💥 Enable Prompt God Mode (advanced recursion)")
+                                   index=["Text", "Conversation", "Image Prompt", "Markdown", "Bullet List", "JSON"].index(prefill.get("output_type", "Text")),
+                                   key="output_type_input")
+    audience = st.text_input("👥 Who's it for? (Optional)", value=prefill.get("audience", ""), key="audience_input")
+    save_txt = st.checkbox("📂 Save this to a .txt file?", key="save_txt_input")
+    depth = st.slider("🧬 Prompt Inception Depth", 1, 5, 1, help="How many layers deep should we go?", key="depth_input")
+    god_mode = st.checkbox("🧠💥 Enable Prompt God Mode (advanced recursion)", key="god_mode_input")
     submitted = st.form_submit_button("✨ Generate Prompt")
-    if st.button("🔄 Reset Prompt Form"):
-        for key in ["goal_input", "tone_input", "output_type_input", "audience_input", "save_txt_input", "depth_input", "god_mode_input"]:
+
+# --- Reset Button ---
+if st.button("🔄 Reset Prompt Form"):
+    for key in ["goal_input", "tone_input", "output_type_input", "audience_input", "save_txt_input", "depth_input", "god_mode_input"]:
         if key in st.session_state:
             del st.session_state[key]
-        st.rerun()
+    st.rerun()
 
 # --- Prompt Generation ---
 if submitted:
