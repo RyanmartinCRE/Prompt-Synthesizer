@@ -34,12 +34,12 @@ model = genai.GenerativeModel("models/gemini-1.5-flash")
 # --- Prompt Tips ---
 tips = [
     "Keep prompts specific, not vague.",
-    "Include sample inputs/outputs.",
-    "Ask the AI to adopt a role.",
-    "Use bullet points for structure.",
-    "Mention tone and audience.",
-    "Avoid multi-tasking prompts.",
-    "Review and refine after first run!",
+    "Include sample inputs/outputs if you can.",
+    "Ask the AI to adopt a role: 'Act like a teacher...'",
+    "Use bullet points for structured tasks.",
+    "Mention tone and audience clearly.",
+    "Avoid multi-tasking prompts. Focus on one goal.",
+    "Review and refine your prompt after the first try!"
 ]
 random_tip = random.choice(tips)
 
@@ -183,7 +183,7 @@ st.markdown("""
 # --- Sidebar ---
 with st.sidebar:
     lottie_json = load_lottiefile("idea.json")
-    st_lottie(lottie_json, width=275, height=275, key="idea")
+    st_lottie(lottie_json, width=200, height=200, key="idea")
     st.markdown("<h2>💡 Prompt Toolkit</h2>", unsafe_allow_html=True)
     st.markdown(f"📌 <i>Tip of the Day:</i> <small>{random_tip}</small>", unsafe_allow_html=True)
     st.markdown("---")
@@ -254,33 +254,24 @@ Follow these steps:
 Respond with only the final prompt (plus any optional tips).
 """
 
-        # Always use the user's goal
-prompt_template = f"""
-You are a professional AI prompt engineer. Your task is to turn a rough user idea into a clear, structured, and effective AI prompt.
+        if god_mode and depth >= 4:
+            prompt_template = f"""
+You are an AI designed to generate prompts that generate prompts.
+Recursion depth: {depth}
+God Mode: {"ON" if god_mode else "OFF"}
 
-Here is the input:
-- Goal: {goal}
-- Tone: {tone}
-- Output Type: {output_type}
-- Audience: {audience or 'Not specified'}
+Your task:
+- Create a prompt that instructs an AI how to help someone write better prompts.
+- The tone should be clear, structured, and meta-aware.
+- Include formatting guidance.
+- Include a bad vs good prompt example (optional).
+- End with a meta-tip for refining future prompts.
 
+Respond only with the generated prompt and a meta-tip.
 """
-
-# Add steps based on depth
-if depth >= 2:
-    prompt_template += "\nStep 1: Analyze the user's goal and identify the best prompt structure.\n"
-if depth >= 3:
-    prompt_template += "Step 2: Break it down into logical sections or formatting guidance.\n"
-
-# Always include the main instruction
-prompt_template += "Step 3: Write the optimized AI prompt that meets the above criteria.\n"
-
-# Add God Mode bonus step
-if god_mode:
-    prompt_template += "Step 4: Critique the prompt and rewrite it with expert-level improvements.\n"
-
-# Final instruction
-prompt_template += "\nRespond only with the final version of the prompt (and an optional pro tip)."
+        else:
+            prompt_template = f"""
+You are a professional AI prompt engineer. Your task is to turn a rough user idea into a clear, structured, and effective AI prompt.
 
 Here is the input:
 - Goal: {goal}
