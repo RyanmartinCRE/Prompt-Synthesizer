@@ -189,7 +189,7 @@ st.markdown("""
 # --- Sidebar ---
 with st.sidebar:
     lottie_json = load_lottiefile("idea.json")
-    st_lottie(lottie_json, width=250, height=250, key="idea")
+    st_lottie(lottie_json, width=275, height=275, key="idea")
     st.markdown("<h2>💡 Prompt Toolkit</h2>", unsafe_allow_html=True)
     st.markdown(f"📌 <i>Tip of the Day:</i> <small>{random_tip}</small>", unsafe_allow_html=True)
     st.markdown("---")
