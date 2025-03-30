@@ -19,7 +19,7 @@ def load_lottiefile(filepath: str):
         return json.load(f)
 
 # --- Page Config ---
-st.set_page_config(page_title="Prompt Synthesizer", page_icon="🧠", layout="centered")
+st.set_page_config(page_title="Prompt Synthesizer", page_icon="🧠", layout="wide")
 
 # --- Load API Key ---
 GOOGLE_API_KEY = st.secrets.get("GOOGLE_API_KEY")
@@ -270,12 +270,9 @@ Respond only with the generated prompt and tip.
         try:
             response = model.generate_content(prompt_template)
             result = response.text
-            escaped_result = html.escape(result)
 
             st.markdown("## 🌟 Your Generated Prompt")
-            st.markdown(f"""
-                <div style='background-color: #fdfdfd; border-left: 5px solid #a777e3; border-radius: 0.5rem; padding: 1rem; font-family: monospace; font-size: 0.9rem; line-height: 1.6; white-space: pre-wrap; box-shadow: 0 4px 12px rgba(0,0,0,0.05);'>{escaped_result}</div>
-            """, unsafe_allow_html=True)
+            st.code(result, language="markdown")
 
             st.download_button("📥 Download Prompt", result, file_name="prompt.txt", mime="text/plain")
 
