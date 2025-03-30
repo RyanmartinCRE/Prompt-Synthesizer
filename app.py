@@ -222,15 +222,38 @@ with st.form("prompt_form"):
 # --- Prompt Generation ---
 if submitted:
     with st.spinner("🪄 Synthesizing your prompt..."):
-        if "prompt" in goal.lower() and goal.lower().count("prompt") >= 3:
-            st.markdown("### 🌀 INCEPTION MODE ACTIVATED")
-            st.info(f"You selected {depth} layer(s) of recursion.")
-            if depth >= 4:
-                st.warning("⚠️ Caution: Depths beyond level 3 may destabilize your perception of reality.")
-            if god_mode:
-                st.balloons()
-                st.success("🛐 Prompt God Mode enabled — the AI transcends time, syntax, and possibly copyright.")
-                st.markdown("> 'What is a prompt, but a mirror to the mind that wields it?' — Prompt God")
+                steps = []
+
+        # STEP 1: Break down the task
+        if depth >= 2:
+            steps.append(f"Step 1: Analyze the user’s goal: '{goal}' and explain what makes a good prompt for it.")
+
+        # STEP 2: Suggest prompt structure
+        if depth >= 3:
+            steps.append("Step 2: Outline the ideal structure and elements the prompt should include.")
+
+        # STEP 3: Draft a first version of the prompt
+        steps.append("Step 3: Generate the full optimized prompt using the goal, tone, output type, and audience.")
+
+        # STEP 4: God Mode – critique and rewrite
+        if god_mode:
+            steps.append("Step 4: Review and critique the prompt like a prompt engineer, then rewrite it with improvements.")
+
+        prompt_template = f"""
+You are an expert AI prompt engineer.
+
+Your mission is to help craft a powerful prompt based on the following:
+- Goal: {goal}
+- Tone: {tone}
+- Output Format: {output_type}
+- Audience: {audience or 'Not specified'}
+
+Follow these steps:
+{chr(10).join(steps)}
+
+Respond with only the final prompt (plus any optional tips).
+"""
+
 
             prompt_template = f"""
 You are an AI designed to generate prompts that generate prompts.
