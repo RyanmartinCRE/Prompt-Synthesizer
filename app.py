@@ -40,12 +40,6 @@ tips = [
     "Mention tone and audience.",
     "Avoid multi-tasking prompts.",
     "Review and refine after first run!",
-    "Set clear goals or desired outcomes.",
-    "Reference format or style when helpful.",
-    "Chain steps when possible.",
-    "Include 'Do' and 'Don’t' examples.",
-    "Request reasoning when clarity matters.",
-    "Use follow-ups to test prompt strength."
 ]
 random_tip = random.choice(tips)
 
