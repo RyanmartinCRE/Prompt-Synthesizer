@@ -254,24 +254,33 @@ Follow these steps:
 Respond with only the final prompt (plus any optional tips).
 """
 
-        if god_mode and depth >= 4:
-            prompt_template = f"""
-You are an AI designed to generate prompts that generate prompts.
-Recursion depth: {depth}
-God Mode: {"ON" if god_mode else "OFF"}
-
-Your task:
-- Create a prompt that instructs an AI how to help someone write better prompts.
-- The tone should be clear, structured, and meta-aware.
-- Include formatting guidance.
-- Include a bad vs good prompt example (optional).
-- End with a meta-tip for refining future prompts.
-
-Respond only with the generated prompt and a meta-tip.
-"""
-        else:
-            prompt_template = f"""
+        # Always use the user's goal
+prompt_template = f"""
 You are a professional AI prompt engineer. Your task is to turn a rough user idea into a clear, structured, and effective AI prompt.
+
+Here is the input:
+- Goal: {goal}
+- Tone: {tone}
+- Output Type: {output_type}
+- Audience: {audience or 'Not specified'}
+
+"""
+
+# Add steps based on depth
+if depth >= 2:
+    prompt_template += "\nStep 1: Analyze the user's goal and identify the best prompt structure.\n"
+if depth >= 3:
+    prompt_template += "Step 2: Break it down into logical sections or formatting guidance.\n"
+
+# Always include the main instruction
+prompt_template += "Step 3: Write the optimized AI prompt that meets the above criteria.\n"
+
+# Add God Mode bonus step
+if god_mode:
+    prompt_template += "Step 4: Critique the prompt and rewrite it with expert-level improvements.\n"
+
+# Final instruction
+prompt_template += "\nRespond only with the final version of the prompt (and an optional pro tip)."
 
 Here is the input:
 - Goal: {goal}
