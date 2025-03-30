@@ -222,7 +222,7 @@ with st.form("prompt_form"):
 # --- Prompt Generation ---
 if submitted:
     with st.spinner("🪄 Synthesizing your prompt..."):
-                steps = []
+        steps = []
 
         # STEP 1: Break down the task
         if depth >= 2:
@@ -254,7 +254,7 @@ Follow these steps:
 Respond with only the final prompt (plus any optional tips).
 """
 
-
+        if god_mode and depth >= 4:
             prompt_template = f"""
 You are an AI designed to generate prompts that generate prompts.
 Recursion depth: {depth}
