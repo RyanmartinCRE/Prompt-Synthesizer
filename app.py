@@ -218,6 +218,11 @@ with st.form("prompt_form"):
     depth = st.slider("🧬 Prompt Inception Depth", 1, 5, 1, help="How many layers deep should we go?")
     god_mode = st.checkbox("🧠💥 Enable Prompt God Mode (advanced recursion)")
     submitted = st.form_submit_button("✨ Generate Prompt")
+    if st.button("🔄 Reset Prompt Form"):
+    for key in ["goal_input", "tone_input", "output_type_input", "audience_input", "save_txt_input", "depth_input", "god_mode_input"]:
+        if key in st.session_state:
+            del st.session_state[key]
+    st.rerun()
 
 # --- Prompt Generation ---
 if submitted:
