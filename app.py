@@ -216,12 +216,12 @@ with st.form("prompt_form"):
     audience = st.text_input("👥 Who's it for? (Optional)", value=prefill.get("audience", ""))
     save_txt = st.checkbox("📂 Save this to a .txt file?")
     depth = st.slider("🧬 Prompt Inception Depth", 1, 5, 1, help="How many layers deep should we go?")
-    god_mode = st.checkbox("😐 Enable Prompt God Mode (advanced recursion)")
+    god_mode = st.checkbox("🧠💥 Enable Prompt God Mode (advanced recursion)")
     submitted = st.form_submit_button("✨ Generate Prompt")
 
 # --- Prompt Generation ---
 if submitted:
-    with st.spinner("🦤 Synthesizing your prompt..."):
+    with st.spinner("🪄 Synthesizing your prompt..."):
         steps = []
 
         if depth >= 2:
@@ -265,7 +265,7 @@ Respond only with the final prompt (and tip).
             st.markdown("## 🌟 Your Generated Prompt")
             st.code(result, language="markdown")
 
-            st.download_button("📅 Download Prompt", result, file_name="prompt.txt", mime="text/plain")
+            st.download_button("📥 Download Prompt", result, file_name="prompt.txt", mime="text/plain")
 
             if save_txt:
                 filename = f"prompt_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.txt"
