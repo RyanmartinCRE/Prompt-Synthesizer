@@ -19,7 +19,7 @@ def load_lottiefile(filepath: str):
         return json.load(f)
 
 # --- Page Config ---
-st.set_page_config(page_title="Prompt Synthesizer", page_icon="🧠", layout="centered")
+st.set_page_config(page_title="Prompt Synthesizer", page_icon="🧠", layout="wide")
 
 # --- Load API Key ---
 GOOGLE_API_KEY = st.secrets.get("GOOGLE_API_KEY")
